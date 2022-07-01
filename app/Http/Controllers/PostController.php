@@ -13,6 +13,6 @@ class PostController extends Controller
 
         $posts = Post::all();
 
-        return inertia('Home', compact('posts'));
+        return inertia('Dashboard', compact('posts'));
     }
 }
