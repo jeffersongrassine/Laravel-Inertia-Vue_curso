@@ -1,39 +1,6 @@
-<script setup>
-import AppLayout from '@/Layouts/AppLayout.vue'
-import Welcome from '@/Jetstream/Welcome.vue'
-</script>
-
-<script>
-import { Link, Head, useForm } from '@inertiajs/inertia-vue3'
-
-export default {
-    props: {
-        posts: Object,
-        errors: Object
-    },
-
-    components: {
-        Link,
-        Head,
-
-    },
-
-    data() {
-        const form = useForm({
-            title: '',
-            content: ''
-        })
-
-        return {
-            form
-        }
-    }
-}
-</script>
-
 <template>
     <Head>
-        <title>Novo Post</title>
+        <title>Edit Post</title>
     </Head>
     <AppLayout title="Dashboard">
         <template #header>
@@ -47,7 +14,7 @@ export default {
 
                     <!-- Formulario -->
                     <div>
-                        <form @submit.prevent="form.post(route('dashboard.store'))">
+                        <form @submit.prevent="form.put(route('dashboard.update', form.id))">
                             <div class="shadow sm:rounded-md sm:overflow-hidden">
                                 <div class="bg-white py-6 px-4 space-y-6 sm:p-6">
                                     <div class="grid grid-cols-6 gap-6">
@@ -94,8 +61,14 @@ export default {
                                         type="submit"
                                         class="bg-indigo-600 border border-transparent rounded-md shadow-sm py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                     >
-                                        Criar Post
+                                        Edit Post
                                     </button>
+                                    <Link 
+                                        :href="route('dashboard')"
+                                        class="bg-gray-600 border border-transparent rounded-md shadow-sm ml-2 py-2 px-4 inline-flex justify-center text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                    >
+                                    Cancelar
+                                    </Link>
                                 </div>
                             </div>
                         </form>
@@ -106,3 +79,33 @@ export default {
         </div>
     </AppLayout>
 </template>
+
+<script setup>
+import AppLayout from '@/Layouts/AppLayout.vue'
+import Welcome from '@/Jetstream/Welcome.vue'
+</script>
+
+<script>
+import { Link, Head, useForm } from '@inertiajs/inertia-vue3'
+
+export default {
+    props: {
+        post: Object,
+        errors: Object
+    },
+
+    components: {
+        Link,
+        Head,
+
+    },
+
+    data(props) {
+        const form = useForm(props.post)
+
+        return {
+            form
+        }
+    }
+}
+</script>
